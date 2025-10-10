@@ -1,0 +1,35 @@
+{
+  "name": "webdocs-be",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node-dev --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
+    "start": "ts-node --respawn --transpile-only -r tsconfig-paths/register src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dayjs": "^1.11.13",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^7.8.2",
+    "multer": "^1.4.5-lts.1",
+    "pino": "^9.4.0"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/express": "^5.0.0",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/multer": "^1.4.12",
+    "@types/node": "^22.7.4",
+    "@types/uuid": "^10.0.0",
+    "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.6.2"
+  }
+}
