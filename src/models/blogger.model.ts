@@ -8,17 +8,20 @@ export interface IBlogger extends Document {
   socialLinks: { platform: string; url: string }[]
 }
 
-const BloggerSchema: Schema = new Schema({
-  name: { type: String, required: true, unique: true },
-  bio: { type: String, required: true },
-  image: { type: String }, // URL to blogger's image
-  socialLinks: [
-    {
-      platform: { type: String },
-      url: { type: String }
-    }
-  ]
-})
+const BloggerSchema: Schema = new Schema(
+  {
+    name: { type: String, required: true, unique: true },
+    bio: { type: String, required: true },
+    image: { type: String }, // URL to blogger's image
+    socialLinks: [
+      {
+        platform: { type: String },
+        url: { type: String }
+      }
+    ]
+  },
+  { timestamps: true }
+)
 
 // Post hook to handle cleanup after blogger deletion
 // BloggerSchema.post(

@@ -10,9 +10,17 @@ import bloggerRoutes from "@routes/blogger.routes"
 import dashboardUserRoutes from "@routes/dashboard-user-management.routes"
 import bcrypt from "bcryptjs"
 import { DashboardUserRole } from "@models/user-role.enum"
+import cors from "cors"
+
 const app = express()
 
 // Middleware
+app.use(
+  cors({
+    origin: "http://localhost:3000", // your Next.js URL
+    credentials: true // ✅ allow cookies
+  })
+)
 app.use(express.json())
 
 // Routes
@@ -36,7 +44,9 @@ app.listen(PORT, () => {
 })
 
 const seedSuperAdmin = async () => {
-  const superAdmin = await DashboardUser.findOne({ email: "super@super.com" })
+  const superAdmin = await DashboardUser.findOne({
+    email: process.env.SUPER_ADMIN_EMAIL
+  })
   if (!superAdmin) {
     const hashedPassword = await bcrypt.hash(
       process.env.SUPER_ADMIN_PASSWORD!,
@@ -44,11 +54,11 @@ const seedSuperAdmin = async () => {
     )
     await DashboardUser.create({
       name: "Super",
-      email: "super@super.com",
+      email: process.env.SUPER_ADMIN_EMAIL,
       password: hashedPassword,
       role: DashboardUserRole.SUPER_ADMIN
     })
-    console.log("super@super.com user created.")
+    console.log(`${process.env.SUPER_ADMIN_EMAIL} user created.`)
   }
 }
 

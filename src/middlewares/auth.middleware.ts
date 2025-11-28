@@ -46,10 +46,7 @@ export const authorizeUser = (roles: DashboardUserRole[]) => {
       const dashboardUser = await DashboardUser.findById(req.user?.userId)
 
       // Check if the user exists and is one of the allowed roles
-      if (
-        !dashboardUser ||
-        !roles.includes(dashboardUser.role as DashboardUserRole)
-      ) {
+      if (!dashboardUser || !roles.includes(dashboardUser.role)) {
         return res.status(403).json({
           message: "Access denied",
           errorCode: ErrorCode.ACCESS_DENIED

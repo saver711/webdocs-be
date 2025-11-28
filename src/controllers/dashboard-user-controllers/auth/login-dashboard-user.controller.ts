@@ -72,10 +72,10 @@ export const loginDashboardUser = async (req: Request, res: Response) => {
     res.json({
       message: "Login successful",
       data: {
-        user: userWithoutPassword,
-        accessToken,
-        refreshToken
-      } // , accessToken, refreshToken Temp for Postman
+        user: userWithoutPassword
+        // accessToken,
+        // refreshToken
+      }
     })
   } catch (error) {
     res.status(500).json({ message: "Server error", error })

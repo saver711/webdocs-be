@@ -60,6 +60,19 @@ export const getAllBloggers = async (req: Request, res: Response) => {
       })
     }
 
+    // Project to include createdAt and other fields
+    pipeline.push({
+      $project: {
+        _id: 1,
+        name: 1,
+        bio: 1,
+        image: 1,
+        socialLinks: 1,
+        createdAt: 1,
+        updatedAt: 1
+      }
+    })
+
     const bloggers = await Blogger.aggregate(pipeline)
 
     const totalBloggers = await Blogger.countDocuments(matchStage) // Use matchStage for total count
