@@ -1,11 +1,11 @@
 import { createBlogger } from "@controllers/blogger-controllers/crud/create-blogger.controller"
-import { deleteBlogger } from "@controllers/blogger-controllers/crud/delete-blogger.controller"
 import { getAllBloggers } from "@controllers/blogger-controllers/crud/get-all-bloggers.controller"
 import { getBloggersByIds } from "@controllers/blogger-controllers/crud/get-bloggers-by-ids.controller"
 import { updateBlogger } from "@controllers/blogger-controllers/crud/update-blogger.controller"
 import { DashboardUserRole } from "@models/user-role.enum"
 import express, { NextFunction, Request, Response } from "express"
 import { authenticate, authorizeUser } from "../middlewares/auth.middleware"
+import { deleteBloggers } from "@controllers/blogger-controllers/crud/delete-blogger.controller"
 
 const router = express.Router()
 
@@ -63,7 +63,7 @@ router.put(
 
 // Delete a blogger (SUPER_ADMIN only)
 router.delete(
-  "/:id",
+  "/",
   (req: Request, res: Response, next: NextFunction) => {
     authenticate(req, res, next)
   },
@@ -75,7 +75,7 @@ router.delete(
     )
   },
   (req: Request, res: Response, next: NextFunction) => {
-    deleteBlogger(req, res, next)
+    deleteBloggers(req, res, next)
   }
 )
 router.post(

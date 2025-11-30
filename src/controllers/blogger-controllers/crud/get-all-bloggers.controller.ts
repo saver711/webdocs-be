@@ -1,6 +1,7 @@
 import Blogger from "@models/blogger.model"
 import { Request, Response } from "express"
-import { SortOrder } from "mongoose" // Import SortOrder type
+import { SortOrder } from "mongoose"
+
 export const getAllBloggers = async (req: Request, res: Response) => {
   const {
     page = 1,
@@ -8,7 +9,9 @@ export const getAllBloggers = async (req: Request, res: Response) => {
     sortBy,
     sortOrder = "asc",
     populate,
-    name
+    name,
+    dateFrom,
+    dateTo
   } = req.query
 
   try {
@@ -23,6 +26,20 @@ export const getAllBloggers = async (req: Request, res: Response) => {
     if (name) {
       matchStage.name = { $regex: new RegExp(name as string, "i") } // Case-insensitive name search
     }
+
+    // Date range filtering
+    if (dateFrom || dateTo) {
+      matchStage.createdAt = {}
+
+      if (dateFrom) {
+        matchStage.createdAt.$gte = new Date(dateFrom as string)
+      }
+
+      if (dateTo) {
+        matchStage.createdAt.$lte = new Date(dateTo as string)
+      }
+    }
+
     if (Object.keys(matchStage).length > 0) {
       pipeline.push({ $match: matchStage })
     }
@@ -82,7 +99,8 @@ export const getAllBloggers = async (req: Request, res: Response) => {
       pagination: {
         total: totalBloggers,
         currentPage: pageNumber,
-        pageSize: pageSize
+        pageSize: pageSize,
+        pageCount: Math.ceil(totalBloggers / pageSize)
       },
       message: "Bloggers fetched successfully"
     })
